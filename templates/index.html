@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>IATI Datastore CSV Query Builder (Alpha Version)</title>
+    <title>OIPA CSV Query Builder (Alpha Version)</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="static/css/custom.css" type="text/css" rel="stylesheet">
     <link href="static/css/bootstrap-chosen.css" type="text/css" rel="stylesheet">
@@ -15,10 +15,10 @@
       <div class="header row">
         <div class="col">
           <h1 dir="ltr">
-            IATI Datastore CSV Query Builder
+            OIPA CSV Query Builder
             <sup><span class="badge badge-warning">Alpha</span></sup>
           </h1>
-          <p>This tool allows you to build common queries to obtain data from the <a href="http://datastore.iatistandard.org/docs/">IATI Datastore</a> in CSV format.</p>
+          <p>This tool allows you to build common queries to obtain data from <a href="https://www.oipa.nl/api/">OIPA</a> in CSV format.</p>
           <p>You may create queries based on who is reporting the information, where the activity is happening, and the sector that the activity occurs in. This may then be configured to show individual activities, transactions or budgets.</p>
         </div>
       </div><!-- end class="header" -->
@@ -46,7 +46,7 @@
         <form id="qb-form" action="index.php" method="post" target="_self" onsubmit="">
 
           <h2>What information are you looking for?</h2>
-          <p>These options let you filter the information you are looking for. Additional filters <a href="http://datastore.iatistandard.org/docs/api/#filtering">are available</a> by querying the Datastore manually.</p>
+          <p>These options let you filter the information you are looking for. Additional filters <a href="https://www.oipa.nl/api/">are available</a> by querying OIPA manually.</p>
 
           <div class="step-section">
             <div class="title">
@@ -56,7 +56,7 @@
             <div class="clearfix"></div>
 
             <div class="row form-group">
-              <label for="reporting-org">
+              <label for="reporting_organisation">
                 <div>
                   <span class="tooltip-ui" data-toggle="tooltip" title="The reporting organisation is the publisher of the IATI data. You would choose this filter to analyse a particular donor or agency's data. This might typically be used in conjunction with a country and/or a sector.">
                     Select reporting organisation (eg UK DFID = GB-GOV-1)
@@ -65,10 +65,10 @@
                 <div dir="ltr"></div>
               </label>
               <div class="clearfix"></div>
-              <select data-placeholder="Choose a reporting organisation..." multiple class="chosen-select form-control" id="reporting-org" name="reporting-org[]">
+              <select data-placeholder="Choose a reporting organisation..." multiple class="chosen-select form-control" id="reporting-org" name="reporting_organisation[]">
                 {{ include('include/reporting_org.html') }}
               </select>
-              <p class="explaination-text"><strong>WARNING:</strong> The Datastore contains activities reported by both primary and secondary sources. A secondary source, such as the UNOCHA Financial Tracking Service (FTS), reports data it holds about other agencies’ activities. An agency may well report activities to both IATI and FTS, who in turn reports the same activities to IATI.</p>
+              <p class="explaination-text"><strong>WARNING:</strong> OIPA contains activities reported by both primary and secondary sources. A secondary source, such as the UNOCHA Financial Tracking Service (FTS), reports data it holds about other agencies’ activities. An agency may well report activities to both IATI and FTS, who in turn reports the same activities to IATI.</p>
             </div>
 
             <div class="row form-group">
@@ -80,7 +80,7 @@
                 </div>
               </label>
               <div class="clearfix"></div>
-              <select data-placeholder="Choose a reporting organisation type..." multiple class="chosen-select form-control" id="reporting-org.type" name="reporting-org.type[]">
+              <select disabled="disabled" data-placeholder="Choose a reporting organisation type..." multiple class="chosen-select form-control" id="reporting-org.type" name="reporting-org.type[]">
                 {{ include('include/reporting_org_type.html') }}
               </select>
             </div>
@@ -123,7 +123,7 @@
                 <div class="errorbox-good">
                   <div dir="ltr">
                     <div>
-                      <label for="recipient-country">
+                      <label for="recipient_country">
                         <div>
                           <span class="tooltip-ui" data-toggle="tooltip" title="Choose the recipient country or countries you are looking for.">
                             Select recipient country
@@ -131,7 +131,7 @@
                         </div>
                       </label>
                       <div class="clearfix"></div>
-                      <select data-placeholder="Choose a country..." multiple class="chosen-select form-control" id="recipient-country" name="recipient-country[]">
+                      <select data-placeholder="Choose a country..." multiple class="chosen-select form-control" id="recipient-country" name="recipient_country[]">
                         {{ include('include/country.html') }}
                       </select>
                     </div>
@@ -140,7 +140,7 @@
                 <div class="errorbox-good">
                   <div dir="ltr">
                     <div>
-                      <label for="recipient-region">
+                      <label for="recipient_region">
                         <div>
                           <span class="tooltip-ui" data-toggle="tooltip" title="Selecting a region will return activities that publishers have been unable to allocate to specific countries.">
                             Select region (eg South Asia = 679)
@@ -148,7 +148,7 @@
                         </div>
                       </label>
                       <div class="clearfix"></div>
-                      <select data-placeholder="Choose a region..." multiple class="chosen-select form-control" id="recipient-region" name="recipient-region[]">
+                      <select data-placeholder="Choose a region..." multiple class="chosen-select form-control" id="recipient-region" name="recipient_region[]">
                         {{ include('include/region.html') }}
                       </select>
                       <p class="explaination-text"><strong>WARNING:</strong> Regions do not automatically contain the countries they are made up of.</p>
@@ -183,7 +183,7 @@
                       After
                     </span>
                   </div>
-                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="start-date__gt" name="start-date__gt" value="{{ start_date__gt }}">
+                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="actual_start_date_gte" name="actual_start_date_gte" value="{{ start_date__gt }}">
                   </input>
                 </div>
                 <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
@@ -192,7 +192,7 @@
                       Before
                     </span>
                   </div>
-                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="start-date__lt" name="start-date__lt" value="{{ start_date__lt }}">
+                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="actual_start_date_lte" name="actual_start_date_lte" value="{{ start_date__lt }}">
                   </input>
                 </div>
               </div>
@@ -211,7 +211,7 @@
                       After
                     </span>
                   </div>
-                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="end-date__gt" name="end-date__gt" value="{{ end_date__gt }}">
+                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="actual_end_date_gte" name="actual_end_date_gte" value="{{ end_date__gt }}">
                   </input>
                 </div>
                 <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
@@ -220,7 +220,7 @@
                       Before
                     </span>
                   </div>
-                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="end-date__lt" name="end-date__lt" value="{{ end_date__lt }}">
+                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" id="actual_end_date_lte" name="actual_end_date_lte" value="{{ end_date__lt }}">
                   </input>
                 </div>
               </div>
@@ -235,13 +235,13 @@
                 </div>
               </label>
               <div class="clearfix"></div>
-              <select data-placeholder="Choose a transaction provider organisation..." multiple class="chosen-select form-control" id="transaction_provider-org" name="transaction_provider-org[]">
+              <select disabled="disabled" data-placeholder="Choose a transaction provider organisation..." multiple class="chosen-select form-control" id="transaction_provider-org" name="transaction_provider-org[]">
                 {{ include('include/transaction_provider_org.html') }}
               </select>
             </div>
 
             <div class="row form-group">
-              <label for="participating-org">
+              <label for="participating_organisation">
                 <div>
                   <span class="tooltip-ui" data-toggle="tooltip" title="Find activities where the speficied entity is listed as a participating organisation.">
                     Select participating organisation
@@ -249,7 +249,7 @@
                 </div>
               </label>
               <div class="clearfix"></div>
-              <select data-placeholder="Choose a participating organisation..." multiple class="chosen-select form-control" id="participating-org" name="participating-org[]">
+              <select data-placeholder="Choose a participating organisation..." multiple class="chosen-select form-control" id="participating-org" name="participating_organisation[]">
                 {{ include('include/participating_org.html') }}
               </select>
             </div>
@@ -274,8 +274,8 @@
                 <ul id="qb-format-list">
                   <li>
                     <label>
-                      <input type="radio" name="format" value="activity" id="format-1" aria-label="Activity"
-                      {% if not format or (format and format == "activity") %}
+                      <input type="radio" name="format" value="activities" id="format-1" aria-label="Activity"
+                      {% if not format or (format and format == "activities") %}
                         checked="checked"
                       {% endif %}
                       />
@@ -286,8 +286,8 @@
                   </li>
                   <li>
                     <label>
-                      <input type="radio" name="format" value="transaction" id="format-2" aria-label="Transaction"
-                      {% if format and format == "transaction" %}
+                      <input type="radio" name="format" value="transactions" id="format-2" aria-label="Transaction"
+                      {% if format and format == "transactions" %}
                         checked="checked"
                       {% endif %}
                       />
@@ -298,7 +298,7 @@
                   </li>
                   <li>
                     <label>
-                      <input type="radio" name="format" value="budget" id="format-3" aria-label="Budget"
+                      <input disabled="disabled" type="radio" name="format" value="budget" id="format-3" aria-label="Budget"
                       {% if format and format == "budget" %}
                         checked="checked"
                       {% endif %}
@@ -332,7 +332,7 @@
                   </li>
                   <li>
                     <label>
-                      <input type="radio" name="grouping" value="by_sector" id="grouping-2" aria-label="By Sector"
+                      <input disabled="disabled" type="radio" name="grouping" value="by_sector" id="grouping-2" aria-label="By Sector"
                       {% if grouping and grouping == "by_sector" %}
                         checked="checked"
                       {% endif %}
@@ -344,7 +344,7 @@
                   </li>
                   <li>
                     <label>
-                      <input type="radio" name="grouping" value="by_country" id="grouping-3" aria-label="By Country"
+                      <input disabled="disabled" type="radio" name="grouping" value="by_country" id="grouping-3" aria-label="By Country"
                       {% if grouping and grouping == "by_country" %}
                         checked="checked"
                       {% endif %}
@@ -378,7 +378,7 @@
                   </li>
                   <li>
                     <label>
-                      <input type="radio" name="sample-size" value="Entire selection" id="sample-size-2" aria-label="Entire selection"
+                      <input disabled="disabled" type="radio" name="sample-size" value="Entire selection" id="sample-size-2" aria-label="Entire selection"
                       {% if size and size == "stream=True" %}
                         checked="checked"
                       {% endif %}
@@ -410,7 +410,7 @@
         <div style="width:100%;height:1em"></div>
 
         <div style="display:none;" class="alert alert-success" id="js-query-link" role="alert">
-          <strong>Your link:</strong> <a id="query-link" href="http://datastore.iatistandard.org/api/1/access/activity.csv">http://datastore.iatistandard.org/api/1/access/activity.csv</a> <span id="preview-link-wrapper">(<a id="preview-link" href="http://preview.iatistandard.org/" target="_blank" rel="noopener noreferrer">Preview as XML</a>)</span>
+          <strong>Your link:</strong> <a id="query-link" href="https://www.oipa.nl/api/activities/?page_size=50&format=csv">https://www.oipa.nl/api/activities/?page_size=50&amp;format=csv</a> <span id="preview-link-wrapper">(<a id="preview-link" href="http://preview.iatistandard.org/" target="_blank" rel="noopener noreferrer">Preview as XML</a>)</span>
         </div>
 
       </div><!-- end class="query-builder"-->
@@ -418,11 +418,10 @@
 
       <div class="row footer">
         <div class="col">
-          <p>IATI Query Builder is free software licenced under the GNU General Public License.<br/>
+          <p>Based on the IATI Query Builder, which is free software licenced under the GNU General Public License.<br/>
           <ul>
             <li><a href="https://github.com/IATI/IATI-Query-Builder" target="_blank" rel="noopener noreferrer nofollow">IATI Query Builder on GitHub</a></li>
-            <li>Please report problems to our <a href="https://github.com/IATI/IATI-Query-Builder/issues" target="_blank" rel="noopener noreferrer nofollow">issues list</a>.</li>
-            <li>Datastore documentation: <a href="http://datastore.iatistandard.org/" target="_blank" rel="noopener noreferrer">http://datastore.iatistandard.org</a></li>
+            <li>OIPA documentation: <a href="https://www.oipa.nl/api/" target="_blank" rel="noopener noreferrer">https://www.oipa.nl/api/</a></li>
           </ul>
           </p>
         </div>
@@ -475,7 +474,7 @@ $(function() {
     if(sampleSize === '50 rows'){
       return '';
     } else {
-      return 'stream=True'
+      return 'stream=True';
     }
   };
 
@@ -496,7 +495,7 @@ $(function() {
     Obtain info for a multi-select.
   */
   QueryBuilder.LinkGen.getMultiSelectInfo = function(name){
-    var separator = '%7C';
+    var separator = '%2C';
     var multiSelect = $('[name="' + name + '[]"]');
     var selectedOptions = $('[name="' + name + '[]"] option:checked');
     var values = [];
@@ -530,27 +529,27 @@ $(function() {
       return '';
     }
 
-    return '?' + filteredSections.join('&');
+    return '&' + filteredSections.join('&');
   };
 
   /*
     Generate the link from the page.
   */
   QueryBuilder.LinkGen.createLink = function(fileType){
-    var baseURL = 'http://datastore.iatistandard.org/api/1/access/';
+    var baseURL = 'https://www.oipa.nl/api/';
     var format = QueryBuilder.LinkGen.getFormat();
     var grouping = QueryBuilder.LinkGen.getGrouping();
-    var reportingOrgs = QueryBuilder.LinkGen.getMultiSelectInfo('reporting-org');
+    var reportingOrgs = QueryBuilder.LinkGen.getMultiSelectInfo('reporting_organisation');
     var reportingOrgTypes = QueryBuilder.LinkGen.getMultiSelectInfo('reporting-org.type');
     var sectors = QueryBuilder.LinkGen.getMultiSelectInfo('sector');
-    var recipientCountries = QueryBuilder.LinkGen.getMultiSelectInfo('recipient-country');
-    var recipientRegions = QueryBuilder.LinkGen.getMultiSelectInfo('recipient-region');
-    var startDateLT = QueryBuilder.LinkGen.getCalendarDate('start-date__lt');
-    var startDateGT = QueryBuilder.LinkGen.getCalendarDate('start-date__gt');
-    var endDateLT = QueryBuilder.LinkGen.getCalendarDate('end-date__lt');
-    var endDateGT = QueryBuilder.LinkGen.getCalendarDate('end-date__gt');
+    var recipientCountries = QueryBuilder.LinkGen.getMultiSelectInfo('recipient_country');
+    var recipientRegions = QueryBuilder.LinkGen.getMultiSelectInfo('recipient_region');
+    var startDateLT = QueryBuilder.LinkGen.getCalendarDate('actual_start_date_lte');
+    var startDateGT = QueryBuilder.LinkGen.getCalendarDate('actual_start_date_gte');
+    var endDateLT = QueryBuilder.LinkGen.getCalendarDate('actual_end_date_lte');
+    var endDateGT = QueryBuilder.LinkGen.getCalendarDate('actual_end_date_gte');
     var transactionProviderOrgs = QueryBuilder.LinkGen.getMultiSelectInfo('transaction_provider-org');
-    var participatingOrgs = QueryBuilder.LinkGen.getMultiSelectInfo('participating-org');
+    var participatingOrgs = QueryBuilder.LinkGen.getMultiSelectInfo('participating_organisation');
     var sampleSize = QueryBuilder.LinkGen.getSampleSize();
     var queryString = QueryBuilder.LinkGen.createQueryString([
       reportingOrgs,
@@ -567,9 +566,9 @@ $(function() {
       sampleSize
     ]);
 
-    fileType = fileType || '.csv';
+    fileType = fileType || 'csv';
 
-    return baseURL + format + grouping + fileType + queryString;
+    return baseURL + format + grouping + '?page_size=50&format=' + fileType + queryString;
   };
 
   /*
@@ -607,7 +606,7 @@ $(function() {
     Generate the link to the Preview tool.
   */
   QueryBuilder.Preview.createLink = function(){
-    var unescapedLink = QueryBuilder.LinkGen.createLink('.xml');
+    var unescapedLink = QueryBuilder.LinkGen.createLink('xml');
     var previewBaseURL = 'http://preview.iatistandard.org/index.php?url=';
 
     // ensure it's only a Preview and not the full set of data being viewed
@@ -636,7 +635,10 @@ $(function() {
   QueryBuilder.Preview.updateVisibility = function(){
     var format = QueryBuilder.LinkGen.getFormat();
     var grouping = QueryBuilder.LinkGen.getGrouping();
-    var canPreview = (format === 'activity') && (grouping === '');
+    // OIPA doesn't have XML output, so previewing in this way
+    // isn't possible.
+    // var canPreview = (format === 'activities') && (grouping === '');
+    var canPreview = false;
     var previewWrapper = $('#preview-link-wrapper');
 
     if(canPreview){
