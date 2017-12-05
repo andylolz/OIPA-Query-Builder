@@ -1,12 +1,10 @@
-# IATI-Query-Builder
-
-[![License: MIT](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/IATI/IATI-Query-Builder#licence)
+# OIPA Query Builder
 
 ## About
 
-A simple form that will build a query string that can then be used to fetch data from the IATI Datastore API.
+A simple form that will build a query string that can then be used to fetch data from OIPA.
 
-See it in action here - http://datastore.iatistandard.org/query/index.php
+See it in action here - https://andylolz.github.io/OIPA-Query-Builder/
 
 
 ## Requirements
@@ -18,8 +16,8 @@ A webserver running php and php-curl.  PHP dependencies are managed using [Compo
 
 ```
 # Clone the repository and enter into the root folder
-git clone https://github.com/IATI/IATI-Query-Builder.git
-cd IATI-Query-Builder
+git clone https://github.com/andylolz/OIPA-Query-Builder.git
+cd OIPA-Query-Builder
 
 # Install dependencies
 composer install
